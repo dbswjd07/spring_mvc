@@ -31,6 +31,17 @@
 		<!--  setter()를 통한 의존성 즉 DI설정, ref속성을 통해서 빈아이디 dataSource를 호출해서 오라클 연결함 -->
 		<property name="configLocation" value="classpath:/mybatis-config.xml" />
 		<!--  classpath 경로는 STS 개발툴의 가상경로는 src/main/resources이다 -->
+		<property name="mapperLocations" value="classpath:com/naver/mappers/*/*.xml" />
+		<!-- 쿼리문을 다루는 mybatis 매퍼태그 파일이 들어가는 경로이다. -->
 		</bean>
+		
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+	destroy-method="clearCache"><!-- destory-method="clearCache"임시 메모리 캐시를 비워서 데이터베이스 연결을 해제 -->
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<!--  생성자를 통한 의존성 주입, mybatis 쿼리문을 수행할 sqlSession할당 -->
+	</bean>
+	
+	<!-- 모델 DAOImpl의 @Repository가 설정된 부분을 스프링에서 자동으로 찾아서 (오토스캔)하여 등록하게 함 -->
+	<context:component-scan base-package="com.naver.dao" />
 </beans> 
 
