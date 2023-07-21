@@ -7,6 +7,7 @@ create table tbl_member(
     ,regdate date default sysdate --가입날짜
 );
 
+select * from tbl_member; 
 
 --tbl_board 게시판 테이블 생성
 create table tbl_board(

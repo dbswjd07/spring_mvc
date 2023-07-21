@@ -1,5 +1,7 @@
 package com.naver.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,5 +21,32 @@ public class BoardDAOImpl implements BoardDAO {
 		//board_in은 board.xml에서 설정할 유일한 아이디명이디.
 		
 	}//스프링 MVC 게시판 저장
+	
+	@Override
+	public int getTotalCount() {
+		return this.sqlSession.selectOne("board_count");
+		//mybatis에서 selectOne()메서드는 단 한 개의 레코드값만 반환한다. board_count는 board.xml 매퍼태그에서
+		//설정할 유일한 아이디명.
+		
+	}//게시물 총 레코드 개수
+	
+
+	@Override
+	public List<BoardVO> getBoardList(BoardVO b) {
+		
+		return this.sqlSession.selectList("board_list",b);
+		//mybatis에서 selectList()메서드는 하나 이상의 레코드를 검색해서 컬렉션 List로 반환.
+		//board_list는 board.xml에서 설정할 유일한 아이디명
+	}//게시물 목록
+
+	@Override
+	public void updateHit(int bno) {
+		this.sqlSession.update("board_hit",bno);
+		//mybatis에서 update()메서드는 레코드를 수정. board_hit는 baord.xml에서 설정할 유일한 아이디명이다.
+		
+	}//조회수 증가
+
+
+	
 	
 }
