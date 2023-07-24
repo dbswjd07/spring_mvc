@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guest">
+	<insert id="guest_in">
+		insert into tbl_guest (gno,gname,gtitle,gcont) values(gno_seq2.nextval,
+		#{gname},#{gtitle},#{gcont})
+	</insert>
+</mapper>

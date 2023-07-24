@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,6 +111,51 @@ public class BoardController {
 			 * 
 			 */
 			BoardVO bc = this.boardService.getBoardCont(bno); //내용보기+조회수 증가
-			return null;
-		}
+			String bcont = bc.getContent().replace("\n","<br>");
+			//textarea 입력박스에서 엔터키를 친 부분을 줄바꿈 처리한다.
+			
+			ModelAndView cm = new ModelAndView("board/board_cont"); 
+			//생성자 인자값으로 뷰페이지 경로 설정 => /WEB-INF/views/board/board_cont.jsp
+			cm.addObject("bc",bc); //bc키이름에 bc객체 저장
+			cm.addObject("bcont",bcont);
+			cm.addObject("page",page); //페이징에서 책갈피 기능을 구현하기 위해서 page키이름에 쪽번호 저장
+			return cm;
+		}//board_cont()
+		
+		//게시판 수정폼
+		@RequestMapping("/board_edit")
+		public ModelAndView board_edit(int bno, int page) {
+			BoardVO eb = this.boardService.getBoardCont2(bno); //조회수는 증가 안되고 내용보기만 처리
+			
+			ModelAndView em = new ModelAndView();
+			em.addObject("eb",eb);
+			em.addObject("page", page);
+			em.setViewName("board/board_edit"); //메서드 인자값으로 뷰리졸브 경로 설정 => /WEB-INF/Views/board/board_edit.jsp
+			return em;
+		}//board_edit;
+		
+		//게시판 수정완료
+		@PostMapping("/board_edit_ok") //post로 접근하는 매핑주소를 처리
+		public String board_edit_ok(@ModelAttribute BoardVO eb, int page, 
+				Model m) {
+			/*@ModelAttribute BoardVO eb로 처리하면 빈클래스 변수명과 네임피라미터 이름이 같으면 eb객체에 글번호. 
+			 * 수정한 글쓴이, 글제목, 글내용까지 저장되어 있다. 하지만 page는 빈클래스의 변수명으로 정의 안되어 있어서 
+			 * 별도로 가쟈와야 한다.
+			 */
+			this.boardService.editBoard(eb); //번호를 기준으로 글쓴이, 글제목, 글내용을 수정
+			m.addAttribute("page",page); //책갈피 기능때문에 page키이름에 쪽번호 저장
+			m.addAttribute("bno",eb.getBno());
+			return "redirect:/board/board_cont";//board_cont?page=쪽번호&bno=번호 형태의 
+			//get방식으로 2개의 피라미터 값이 전달된다.
+		}//board_edit_ok()
+		
+		//게시물 삭제
+		@GetMapping("/board_del")
+		public ModelAndView board_del(int bno,int page, RedirectAttributes rttr) {
+			this.boardService.delBoard(bno); //번호를 기준으로 게시물 삭제
+			rttr.addFlashAttribute("msg","success");
+			return new ModelAndView("redirect:/board/board_list?page="+page);
+		}//board_del()
+		
+		
 }

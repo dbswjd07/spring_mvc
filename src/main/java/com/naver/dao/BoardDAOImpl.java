@@ -46,6 +46,24 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}//조회수 증가
 
+	@Override
+	public BoardVO getBoardCont(int bno) {
+		return this.sqlSession.selectOne("board_cont",bno);
+	}//내용보기
+
+	@Override
+	public void editBoard(BoardVO eb) {
+		this.sqlSession.update("board_edit", eb);
+		
+	}
+
+	@Override
+	public void delboard(int bno) {
+		this.sqlSession.delete("board_del",bno);
+		//mybatis에서 delete()메서드는 레코드를 삭제한다.
+		
+	}//삭제
+
 
 	
 	
