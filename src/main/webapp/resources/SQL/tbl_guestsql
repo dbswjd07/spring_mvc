@@ -1,11 +1,11 @@
 --tbl_guest 테이블 생성
 create table tbl_guest(
-gno number(35) primary key --글번호
-, gname varchar(20) not null --글쓴이
-, gtitle varchar2(200) not null --글제목
-, gcont varchar2(4000) not null --글내용
-, ghit number(38) default 0 --조회수
-, gdate date default sysdate --작성 날짜
+gno number(35) primary key -- 방명록 번호
+, gname varchar(20) not null -- 작성자
+, gtitle varchar2(200) not null -- 방명록 제목
+, gcont varchar2(4000) not null -- 방명록 내용
+, ghit number(38) default 0 -- 조회수
+, gdate date default sysdate -- 작성 날짜
 );
 
 select * from tbl_guest order by gno desc;

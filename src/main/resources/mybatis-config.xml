@@ -14,5 +14,6 @@ PUBLIC "-//mybatis.org//DTD config 3.0//EN"
 		<typeAlias type="com.naver.vo.BoardVO" alias="board" />
 		
 		<typeAlias type="com.naver.vo.GuestVO" alias="guest" />
+		<typeAlias type="com.naver.vo.ReplyVO" alias="reply" />
 	</typeAliases>
 </configuration>

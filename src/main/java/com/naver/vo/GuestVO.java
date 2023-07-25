@@ -6,7 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 
-public class GuestVO {
+public class GuestVO { //데이터 저장빈 클래스
 	private int gno; //방명록 글번호
 	private String gname; //글쓴이
 	private String gtitle; //방명록 글제목
