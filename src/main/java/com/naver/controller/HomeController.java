@@ -39,4 +39,11 @@ public class HomeController {
 		//이 뷰페이지인 jsp파일명이다.
 	}
 	
+	
+	//댓글 뷰페이지 작업
+	@RequestMapping("/test") //test 매핑주소 등록
+	public void test() {
+		//메서드 리턴차입이 없는 void형이면 매핑주소인 test가 뷰페이지 파일명 즉 test.jsp가 된다.
+		
+	}
 }

@@ -9,4 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
 		insert into tbl_guest (gno,gname,gtitle,gcont) values(gno_seq2.nextval,
 		#{gname},#{gtitle},#{gcont})
 	</insert>
+	
+	<!-- 총레코드 개수=>총 게시물 수 -->
+   <select id="g_count" resultType="int">
+    <!--  resultType은 반환 타입 속성이고 생략불가. 반환타입이 정수 숫자타입이다. -->
+     select count(*)  from tbl_guest <!-- count()는 레코드 개수를 구하는 오라클 함수 이다. -->
+   </select>    
+   
+  
 </mapper>
