@@ -35,8 +35,8 @@ rno number(38) primary key --댓글 번호
 , regdate date --댓글 등록날짜
 , updatedate date --댓글 수정날짜
 );
-
-select * from tbl_reply order by rno desc;  --댓글 번호를 기준으로 내림차순 정렬
+alter table tbl_reply rename column replaytext to replytext;
+select * from tbl_reply order by rno desc;   --댓글 번호를 기준으로 내림차순 정렬
 
 --tbl_reply 테이블 bno컬럼 외래키 추가 설정
 alter table tbl_reply add constraint tbl_reply_bno_fk
@@ -51,3 +51,40 @@ nocache; -- 임시메모리를 사용하지 않아야 함
 --rno_seq 시퀀스 다음 번호값 확인
 select rno_seq.nextval as "시퀀스 번호값 확인" from dual;  
 
+--스프링 AOP와 트랜잭션 실습을 위한 샘플 테이블 생성
+--tbl_user 테이블 생성
+create table tbl_user(
+uid2 varchar2(50) primary key --회원 아이디
+, upw varchar2(100) not null --비번
+,uname varchar2(50) not null --회원 이름
+,upoint number(38) default 0 -- 메시지가 보내지면 포인트 점수 10점 업데이트 => 메시지가  insert되면 메시지 하나당 포인트 점수 10점 update는  트랜잭션 적용대상
+);
+insert into tbl_user(uid2, upw ,uname) values('user00','56789','홍길동');
+insert into tbl_user(uid2, upw, uname) values('user01','234589','이순신');
+
+commit;
+
+select * from tbl_user order by uid2 asc;
+
+--tbl_message 테이블 생성
+create table tbl_message(
+mid number(38) primary key
+,targetid varchar2(50) not null -- 외래키 인 foreign key 추가 설정 => tbl_user테이블의 uid2컬럼 회원아이디값만 저장됨
+,sender varchar2(50) not null -- 메시지를 보낸 사람
+,message varchar2(4000) --보낸 메시지
+, senddate date --보낸 날짜
+
+);
+
+--targetid 컬럼에 추가적인 외래키 설정
+alter table tbl_message add constraint tbl_message_targetid_fk
+foreign key(targetid) references tbl_user(uid2);
+
+--mid_no_seq 시퀀스 생성
+create sequence mid_no_seq
+start with 1 --1부터 시작
+increment by 1 --1씩 증가
+nocache; --임식 메모리 사용 안함
+
+--mid_no_seq 시퀀스 다음 번호값 확인
+select mid_no_seq.nextval as "시퀀스 번호값 확인" from dual;

@@ -32,7 +32,7 @@ public class ReplyController {
 		ResponseEntity<String> entity =null;
 		
 			this.replyService.addreply(vo); //댓글 등록
-			entity = new ResponseEntity<>("SECCESS",HttpStatus.OK);
+			entity = new ResponseEntity<>("SUCCESS",HttpStatus.OK);
 			
 			//댓글 저장 성공시 SUCCESS 문자를 반환하고 동시에 200정상 상태코드(HttpStatus.OK)가 반환
 		try {
@@ -75,7 +75,7 @@ public class ReplyController {
 		entity=new ResponseEntity<>("SUCCESS",HttpStatus.OK);
 	}catch(Exception e) {
 		e.printStackTrace();
-		entity= new ResponseEntity<>(e.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
+		entity= new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 	return entity;
 	}//editReply()
@@ -87,6 +87,7 @@ public class ReplyController {
 		
 		try {
 			this.replyService.delReply(rno); //댓글 삭제
+			entity=new ResponseEntity<>("SUCCESS",HttpStatus.OK);
 			/*
 			 * 문제) 댓글 번호를 기준으로 삭제되게 serviceImpl, DAOImpl, reply.xml까지 완성해서 arc에서 
 			 * 개발자 테스트까지 완료해 본다.
