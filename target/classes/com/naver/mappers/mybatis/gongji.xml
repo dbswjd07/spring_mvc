@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="gongji">
+	<insert id = "gongji_in" parameterType="com.naver.vo.GuestVO">
+		insert into tbl_gongji (gongji_no, gongji_name, gongji_title, gongji_cont, gongji_hit, gongji_date) 
+		values(gongji_no_seq, #{gongji_name}, #{gongji_title}, #{gongji_cont}, sysdate);
+	</insert>
+</mapper>

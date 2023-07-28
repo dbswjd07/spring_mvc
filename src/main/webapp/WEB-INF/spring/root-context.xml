@@ -36,7 +36,15 @@
 		<property name="mapperLocations" value="classpath:com/naver/mappers/*/*.xml" />
 		<!-- 쿼리문을 다루는 mybatis 매퍼태그 파일이 들어가는 경로이다. -->
 		</bean>
-		
+	
+	<!-- 스프링 트랜잭션 매니저 설정 -->	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name = "dataSource" ref ="dataSource"/>
+		<!--  setter()를 통한 의존성 주입 (DI설정) => ref 빈아이디 dataSource를 호출해서 오라클을 연결한다 -->
+	</bean>
+	<tx:annotation-driven/> <!--  트랜잭션 설정 애너테이션  => @Transactional 애너테이션을 통한 트랜잭션 
+	관리가 가능함-->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
 	destroy-method="clearCache"><!-- destory-method="clearCache"임시 메모리 캐시를 비워서 데이터베이스 연결을 해제 -->
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
@@ -52,6 +60,8 @@
 		3. 스프링의 AOP를 통한 트랜잭션 적용이다. 이것을 적용함으로써 데이터 불일치 현상을 제거해서 사이트의 신뢰도를 높인다.
 	-->
 	<context:component-scan base-package="com.naver.service" />
+	
+	<aop:config /> <!-- AOP XML 환경 설정  -->
 	
 </beans> 
 
