@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+	1. Spring Legacy Project(Spring MVC Project)에서는 서블릿 버전이 2.5이기 때문에 xml 네임스페이스를
+		2.5에서 3.1로 수정해야 한다.
+	2. 톰캣 7.0 버전 이후부터는 서블릿 3.0이상을 지원하기 때문에 pom.xml에서 이진파일(자료실의 파일첨부된 파일을 말함)
+		업로드 라이브러리를 추가하지 않고 서블릿 자체적인 파일업로드 api를 사용한다.
+ -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+   id="WebApp_ID" version="3.1">
+
+<!-- 서블릿 2.5는 주석문 처리
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"> -->
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+		/WEB-INF/spring/root-context.xml		
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -23,6 +38,16 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- 자료실 기능 => 이진파일 업로드 설정 -->
+		<multipart-config>
+			<location>C:\\upload</location><!-- 이진파일 업로드 서버 경로 -->
+			<max-file-size>20971520</max-file-size> <!--  1MB * 20 => 업로드 되는 파일 최대크기 -->
+			<max-request-size>41943040</max-request-size> <!-- 40MB => 한 번에 올릴 수 있는 최대 크기 -->
+			<file-size-threshold>20971520</file-size-threshold> <!--  20MB -> 메모리 사용크기 -->
+		</multipart-config>
+		
+		
 	</servlet>
 		
 	<servlet-mapping>
@@ -45,4 +70,17 @@
 		<filter-name>encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
 </web-app>
+
+
+
+
+
+
+
+
+
+
+

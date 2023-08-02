@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
 	 <!--  게시물 목록 -->
 	 <select id="board_list" resultType="board" parameterType="board">
 	 	select * from 
-	 	(select rowNum rNum,bno,writer,title,viewcnt,regdate 
+	 	(select rowNum rNum,bno,writer,title,viewcnt,regdate,replycnt 
 		from (select * from tbl_board order by bno desc))
 		where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
 		<!--  rowNum컬럼은 오라클에서 테이블 생성시 기본으로 추가된다.
@@ -59,6 +59,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
 	 <!-- 
 	 문제) 번호를 기준으로 게시물이 삭제되게 해보고, 디버깅까지 완료하자.
 	  -->
+	  
+	  <!--  댓글 수 카운터 -->
+	  <update id="updateReplyCnt" parameterType="java.util.Map">
+	  	update tbl_board set replycnt = replycnt+#{count} where bno=#{bno}
+	  </update>
 	 
 	 
 </mapper>

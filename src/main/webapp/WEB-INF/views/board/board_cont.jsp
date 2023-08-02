@@ -53,7 +53,10 @@
  </tr>
 </table>
 
-<br><hr><br>
+<br>
+<hr>
+[댓글 개수: ${bc.replycnt} 개]
+<br>
 
 <%-- 댓글 수정화면 --%>
 <div id = "modDiv" style="display: none;">
@@ -137,6 +140,7 @@
 				//result 매개변수에 저장
 				if(result == 'SUCCESS'){
 					alert('댓글이 등록되었습니다!');
+					location.reload(); //새로고침 (단축키 : F5)
 					getAllList();//댓글 목록 함수 호출
 				}
 				
@@ -206,6 +210,7 @@
 				if(result == 'SUCCESS'){
 					alert('댓글이 삭제되었습니다!');
 					$('#modDiv').hide('slow');
+					location.reload(); //새로고침
 					getAllList();
 				}
 			}

@@ -36,4 +36,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 		
 		this.sqlSession.delete("reply_del", rno);
 	}
+
+	@Override
+	public int getBno(int rno) {
+		
+		return this.sqlSession.selectOne("reply_bno",rno);
+	}//댓글 번호에 해당하는 게시판 번호 구하기
 }

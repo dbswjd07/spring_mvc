@@ -1,6 +1,8 @@
 package com.naver.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,17 @@ public class BoardDAOImpl implements BoardDAO {
 		//mybatis에서 delete()메서드는 레코드를 삭제한다.
 		
 	}//삭제
+
+	@Override
+	public void updateReplyCnt(int bno, int count) {
+		Map<String,Object> pm = new HashMap<>();
+		//키, 값 쌍으로 저장하는 컬렉션 사전적인 자료구조
+		
+		pm.put("bno", bno); //게시판 번호 지정
+		pm.put("count",count);
+		
+		this.sqlSession.update("updateReplyCnt",pm);
+	}//댓글 개수 카운터 => 인자값 복수개가 board.xml로 전달할 때는 컬렉션인 java.util패키지의 Map을 사용한다. 
 
 
 	

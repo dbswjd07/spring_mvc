@@ -14,6 +14,7 @@ public class BoardVO { /* tbl_board테이블의 컬럼명과 데이터 저장 �
 	private String content; //글내용
 	private int viewcnt; //조회수
 	private String regdate; //등록날짜
+	private int replycnt; //댓글 개수 카운터
 	
 	//페이징 => 쪽나누기
 	private int startrow; //시작행 번호
